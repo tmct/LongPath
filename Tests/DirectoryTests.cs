@@ -127,6 +127,7 @@ namespace Tests
 			}
 		}
 
+#if NET_4_5
 		[Test]
 		public void TestEnumerateDirectoriesWithSearch()
 		{
@@ -239,6 +240,7 @@ namespace Tests
 				Directory.Delete(tempLongPathFilename);
 			}
 		}
+#endif
 
 		/// <remarks>
 		/// Tests <see cref="Directory.EnumerateDirectories(string)"/>, depends on <see cref="Pri.LongPath.Directory.CreateDirectory"/>

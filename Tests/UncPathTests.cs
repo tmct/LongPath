@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Directory = Pri.LongPath.Directory;
 using Path = Pri.LongPath.Path;
@@ -158,9 +159,7 @@ namespace Tests
         public void TestGetPathRoot()
         {
             var root = Path.GetPathRoot(uncDirectory);
-            Assert.IsNotNull(root);
-            Assert.AreEqual(15, root.Length);
-			Assert.IsTrue(@"\\localhost\C$\".Equals(root, StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(Regex.IsMatch(root, @"^\\\\localhost\\.\$\\$", RegexOptions.IgnoreCase));
         }
 
         [Test]

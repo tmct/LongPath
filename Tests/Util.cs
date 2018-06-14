@@ -104,7 +104,7 @@ namespace Tests
 			var tempLongPathFilename = CreateNewEmptyFile(longPathDirectory);
 			var fileStream = File.Open(tempLongPathFilename, FileMode.Create, FileAccess.Write, FileShare.Read, 4096,
 				FileOptions.SequentialScan);
-			using (var streamWriter = new StreamWriter(fileStream, Encoding.Unicode, 4096, false))
+			using (var streamWriter = new StreamWriter(fileStream, Encoding.Unicode, 4096))
 			{
 				streamWriter.WriteLine("beginning of file");
 			}

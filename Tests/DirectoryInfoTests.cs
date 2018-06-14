@@ -530,6 +530,7 @@ namespace Tests
 			}
 		}
 
+#if NET_4_5
 		[Test]
 		public void TestEnumerateFileSystemInfosWithSearchRecursiveNoResults()
 		{
@@ -556,6 +557,7 @@ namespace Tests
 				newDi.Delete(true);
 			}
 		}
+#endif
 
 		[Test]
 		public void TestEnumerateDirectoriesWithSearchAndOption()
