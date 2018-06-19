@@ -115,9 +115,9 @@ namespace Tests
 			Pri.LongPath.FileInfo fi;
 			try
 			{
-				Assert.Throws<FileNotFoundException>(() => fi = new FileInfo(filename));
+				Assert.DoesNotThrow(() => fi = new FileInfo(filename));
 			}
-			catch
+			finally
 			{
 				File.Delete(filename);
 			}

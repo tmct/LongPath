@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using Directory = Pri.LongPath.Directory;
 using FileInfo = Pri.LongPath.FileInfo;
@@ -194,6 +195,7 @@ namespace Tests
             }
         }
 
+#if NET_4_5
         [Test]
         public void TestEnumerateDirectoriesWithSearch()
         {
@@ -306,6 +308,7 @@ namespace Tests
                 Directory.Delete(tempLongPathFilename);
             }
         }
+#endif
 
 		/// <remarks>
 		/// Tests <see cref="Directory.EnumerateDirectories(string)"/>, depends on <see cref="Pri.LongPath.Directory.CreateDirectory"/>
@@ -523,7 +526,8 @@ namespace Tests
         [Test]
         public void TestGetDirectoryRoot()
         {
-			Assert.IsTrue(@"\\localhost\C$\".Equals(Directory.GetDirectoryRoot(uncDirectory), StringComparison.InvariantCultureIgnoreCase));
+            var directoryRoot = Directory.GetDirectoryRoot(uncDirectory);
+            Assert.IsTrue(Regex.IsMatch(directoryRoot, @"^\\\\localhost\\.\$\\$", RegexOptions.IgnoreCase));
         }
 
         [Test]
