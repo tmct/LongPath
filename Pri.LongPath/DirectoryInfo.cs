@@ -7,6 +7,12 @@ using System.Runtime.CompilerServices;
 using System.Linq;
 #endif
 
+//TODO check other members:
+// Failed : Tests.UnitTest1.DirectoryInfoClassIsComplete
+//   missing: IEnumerable`1 EnumerateFileSystemInfos(String, SearchOption), FullName, String get_FullName()
+// extra: FileSystemInfo get_SystemInfo(), SystemInfo
+//   Expected: less than or equal to 39
+//   But was:  40
 namespace Pri.LongPath
 {
 	using SearchOption = System.IO.SearchOption;

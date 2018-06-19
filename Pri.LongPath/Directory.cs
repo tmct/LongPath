@@ -307,6 +307,7 @@ namespace Pri.LongPath
 		///     </para>
 		///     <paramref name="path"/> specifies a device that is not ready.
 		/// </exception>
+		//TODO these two both exist in .NET 4.0! change the preprocessor directives...
 		public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern)
 		{
 		    if (Common.IsRunningOnMono()) return System.IO.Directory.EnumerateDirectories(path, searchPattern);
