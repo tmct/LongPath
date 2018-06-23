@@ -154,13 +154,11 @@ namespace Pri.LongPath
             return Directory.EnumerateFileSystemEntries(FullPath, searchPattern, true, true, System.IO.SearchOption.TopDirectoryOnly)
 					.Select(e => Directory.Exists(e) ? (FileSystemInfo)new DirectoryInfo(e) : (FileSystemInfo)new FileInfo(e));
 		}
-#if NET_4_5
 		public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption)
 		{
 			return Directory.EnumerateFileSystemEntries(FullPath, searchPattern, searchOption)
 					.Select(e => Directory.Exists(e) ? (FileSystemInfo)new DirectoryInfo(e) : (FileSystemInfo)new FileInfo(e));
 		}
-#endif
 #endif //NET_4_0 || NET_4_5
 
 		private string GetDirName(string fullPath)

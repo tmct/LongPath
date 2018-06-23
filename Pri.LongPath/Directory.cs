@@ -255,9 +255,7 @@ namespace Pri.LongPath
 
             return EnumerateFileSystemEntries(path, "*", true, false, SearchOption.TopDirectoryOnly);
 		}
-#endif
 
-#if NET_4_5
 		/// <summary>
 		///     Returns a enumerable containing the directory names of the specified directory that
 		///     match the specified search pattern.
@@ -321,9 +319,7 @@ namespace Pri.LongPath
 
             return EnumerateFileSystemEntries(path, searchPattern, true, false, options);
 		}
-#endif
 
-#if NET_4_0 || NET_4_5
 		/// <summary>
 		///     Returns a enumerable containing the file names of the specified directory.
 		/// </summary>
