@@ -174,10 +174,11 @@ namespace Tests
             Assert.IsTrue(Directory.Exists(uncDirectory));
         }
 
-		/// <remarks>
-		/// Tests <see cref="Directory.EnumerateDirectories(string)"/>, depends on <see cref="Pri.LongPath.Directory.CreateDirectory"/>
-		/// </remarks>
-		[Test]
+#if NET_4_0 || NET_4_5
+        /// <remarks>
+        /// Tests <see cref="Directory.EnumerateDirectories(string)"/>, depends on <see cref="Pri.LongPath.Directory.CreateDirectory"/>
+        /// </remarks>
+        [Test]
         public void TestEnumerateDirectories()
         {
             var randomFileName = Path.GetRandomFileName();
@@ -195,7 +196,6 @@ namespace Tests
             }
         }
 
-#if NET_4_5
         [Test]
         public void TestEnumerateDirectoriesWithSearch()
         {
@@ -308,7 +308,6 @@ namespace Tests
                 Directory.Delete(tempLongPathFilename);
             }
         }
-#endif
 
 		/// <remarks>
 		/// Tests <see cref="Directory.EnumerateDirectories(string)"/>, depends on <see cref="Pri.LongPath.Directory.CreateDirectory"/>
@@ -448,6 +447,7 @@ namespace Tests
                 Directory.Delete(tempLongPathFilename, recursive);
             }
         }
+#endif
 
         [Test]
         public void TestGetFiles()
@@ -657,7 +657,7 @@ namespace Tests
                 Assert.IsFalse(security.AreAuditRulesProtected);
                 AuthorizationRuleCollection perm = security.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
                 var ntAccount = new System.Security.Principal.NTAccount(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
-                FileSystemAccessRule rule = perm.Cast<FileSystemAccessRule>().SingleOrDefault(e => ntAccount == e.IdentityReference);
+                FileSystemAccessRule rule = perm.GetMatchingAccessRuleOrDefault(ntAccount);
                 Assert.IsNotNull(rule);
                 Assert.IsTrue((rule.FileSystemRights & FileSystemRights.FullControl) != 0);
             }
@@ -683,11 +683,11 @@ namespace Tests
                 Assert.IsTrue(security.AreAuditRulesCanonical);
                 Assert.IsFalse(security.AreAccessRulesProtected);
                 Assert.IsFalse(security.AreAuditRulesProtected);
-                var securityGetAccessRules = security.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount)).Cast<FileSystemAccessRule>();
-                Assert.AreEqual(0, securityGetAccessRules.Count());
+                var securityGetAccessRules = security.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount));
+                Assert.AreEqual(0, securityGetAccessRules.Count);
                 AuthorizationRuleCollection perm = security.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
                 var ntAccount = new System.Security.Principal.NTAccount(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
-                FileSystemAccessRule rule = perm.Cast<FileSystemAccessRule>().SingleOrDefault(e => ntAccount == e.IdentityReference);
+                FileSystemAccessRule rule = perm.GetMatchingAccessRuleOrDefault(ntAccount);
                 Assert.IsNotNull(rule);
                 Assert.IsTrue((rule.FileSystemRights & FileSystemRights.FullControl) != 0);
             }
@@ -1166,6 +1166,7 @@ namespace Tests
             Directory.Delete(uncPathNearMaxPathLimit);
         }
 
+#if NET_4_0 || NET_4_5
         [Test]
         public void TestDirectoryEnumerateDirectoriesNearMaxPathLimit()
         {
@@ -1186,6 +1187,7 @@ namespace Tests
 
             Assert.That(subDirs.Length, Is.EqualTo(1));
         }
+#endif
 
         [TearDown]
         public void TearDown()

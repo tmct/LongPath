@@ -1267,12 +1267,12 @@ namespace Tests
 				Assert.IsTrue(security.AreAuditRulesCanonical);
 				Assert.IsFalse(security.AreAccessRulesProtected);
 				Assert.IsFalse(security.AreAuditRulesProtected);
-				var securityGetAccessRules = security.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount)).Cast<FileSystemAccessRule>();
-				Assert.AreEqual(0, securityGetAccessRules.Count());
+				var securityGetAccessRules = security.GetAuditRules(true, true, typeof(System.Security.Principal.NTAccount));
+				Assert.AreEqual(0, securityGetAccessRules.Count);
 				AuthorizationRuleCollection perm = security.GetAccessRules(true, true, typeof(System.Security.Principal.NTAccount));
 				var ntAccount = new System.Security.Principal.NTAccount(System.Security.Principal.WindowsIdentity.GetCurrent().Name);
-				FileSystemAccessRule rule = perm.Cast<FileSystemAccessRule>().SingleOrDefault(e => ntAccount == e.IdentityReference);
-				Assert.IsNotNull(rule);
+                FileSystemAccessRule rule = perm.GetMatchingAccessRuleOrDefault(ntAccount);
+                Assert.IsNotNull(rule);
 				Assert.IsTrue((rule.FileSystemRights & FileSystemRights.FullControl) != 0);
 			}
 			finally
